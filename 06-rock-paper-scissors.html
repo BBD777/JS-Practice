@@ -29,20 +29,28 @@
     <button onclick="
       score.wins=0;
       score.losses=0;
-      score.ties=0 ">
-      Reset score
+      score.ties=0 ;
+      localStorage.removeItem(score);
+      ">Reset score
     </button>
 
     <script>
-      const score ={
+      const score1 ={
         wins: 0,
         losses: 0,
         ties: 0
       };
-
-      console.log(json.parse(localStorage.getItem('score')));
-      
-
+      const myLocalStorage = localStorage.getItem('score');
+    
+      let score =  JSON.parse(myLocalStorage);
+      // can do logic as !score doers same as below
+      if (score === null){
+        const score ={
+        wins: 0,
+        losses: 0,
+        ties: 0
+      };
+      }
       function playGame(playerMove){
         const computerMove = pickComputerMoves();
         let result =  '';
@@ -86,8 +94,13 @@
             break;
           }
         }
+        //console.log(score);
         localStorage.setItem('score', JSON.stringify(score));
+       // console.log(json.parse(localStorage.getItem('score')));
+       
         alert(`You picked ${playerMove}. Computer picked ${computerMove}. you ${result}. Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`);
+        console.log(score);
+        console.log(`FROM LOCAL ${localStorage.getItem('score')}`);
       }
 
       function pickComputerMoves() {
