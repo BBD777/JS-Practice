@@ -7,26 +7,22 @@
   </head>
   <body>
     <p>Rock Paper Scissors</p>
-    
     <button
       onclick="
       playGame('rock');">
       Rock</button>
  
-    <button
-      onclick="
-      playGame('paper');">
-      Paper</button>
+    <button onclick="
+      playGame('paper');
+      ">Paper</button>
     
-    <button
-      onclick="
-        playGame('scissors');">
-        Scissors</button>
+    <button onclick="
+        playGame('scissors');
+        ">Scissors</button>
 
-    <p>Start</p>
     <p class="js-result"></p>
     <p class="js-moves"></p>
-    <p class="js-score">qq</p>
+    <p class="js-score"></p>
 
     <button onclick="
       score.wins=0;
@@ -36,10 +32,32 @@
       updateScoreElement();
       ">Reset score</button>
 
+    <p>Amazon Shipping Calculator</p>
+        <input placeholder="cost of order" 
+    class="js-cost-input" onkeydown = handleCostkeyDown();>
+    <button onclick="
+    calculateTotal();"
+    >Calculate</button>
+    <p class = "js-total-cost"></p>
+
     <script>
-    
+function handleCostkeyDown(){
+  if (event.key ==='Enter'){
+    calculateTotal();
+  }
+}
+
+    function calculateTotal(){
+      const inputElement = document.querySelector('.js-cost-input');
+      let cost = Number(inputElement.value) ;
+      if (cost < 40){
+        cost = cost + 10;
+        console.log(cost);
+      }
+      document.querySelector('.js-total-cost').innerHTML = `£${cost}`;
+    }
       const myLocalStorage = localStorage.getItem('score');
-    
+   
       let score =  JSON.parse(myLocalStorage);
       // can do logic as !score doers same as below
       if (score === null){
@@ -48,6 +66,7 @@
           losses: 0,
           ties: 0
         };
+        console.log(score);
       } 
 
       updateScoreElement();
@@ -95,7 +114,13 @@
             break;
           }
         }
+
         localStorage.setItem('score', JSON.stringify(score));
+      
+        updateScoreElement();
+
+        document.querySelector('.js-moves').innerHTML =`You ${result}`;
+        document.querySelector('.js-result').innerHTML = `you ${playerMove} - ${computerMove}`;
       }
 
       function updateScoreElement() {
